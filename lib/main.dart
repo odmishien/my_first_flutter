@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,48 +10,94 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'startup name generator',
-      home: RandomWords(),
+      title: '麻雀点数計算',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('麻雀点数計算🀄️'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.sync),
+              onPressed: () {},
+            )
+          ],
+        ),
+        body: MemberForm(),
+      ),
     );
   }
 }
 
-class RandomWords extends StatefulWidget {
+class MemberForm extends StatefulWidget {
   @override
-  _RandomWordsState createState() => _RandomWordsState();
+  _MemberFormState createState() => _MemberFormState();
 }
 
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = TextStyle(fontSize: 18.0);
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: (context, i) {
-          if (i.isOdd) return Divider();
-          final index = i ~/ 2;
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10));
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
+class _MemberFormState extends State<MemberForm> {
+  final _tonController = TextEditingController();
+  final _nanController = TextEditingController();
+  final _shaController = TextEditingController();
+  final _peController = TextEditingController();
+  String _text = '';
 
-  Widget _buildRow(WordPair pair) {
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-    );
-  }
-
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('startup name generator'),
-      ),
-      body: _buildSuggestions(),
+    return Container(
+      padding: EdgeInsets.all(32.0),
+      child: Column(children: <Widget>[
+        Text('メンバー'),
+        Row(
+          children: <Widget>[
+            Expanded(flex: 3, child: Text('東家: ')),
+            Expanded(
+              flex: 7,
+              child: TextField(
+                controller: _tonController,
+                maxLength: 10,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(flex: 3, child: Text('南家: ')),
+            Expanded(
+              flex: 7,
+              child: TextField(
+                controller: _nanController,
+                maxLength: 10,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(flex: 3, child: Text('西家: ')),
+            Expanded(
+              flex: 7,
+              child: TextField(
+                controller: _shaController,
+                maxLength: 10,
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(flex: 3, child: Text('北家: ')),
+            Expanded(
+              flex: 7,
+              child: TextField(
+                controller: _peController,
+                maxLength: 10,
+              ),
+            ),
+          ],
+        )
+      ]),
     );
   }
 }
