@@ -14,8 +14,7 @@ class MyApp extends StatelessWidget {
       home: MainPage(),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => new MainPage(),
-        '/game': (BuildContext context) =>
-            new GamePage('hoge', 'hoge', 'hoge', 'hoge'),
+        '/game': (BuildContext context) => new GamePage('', '', '', ''),
       },
     );
   }
@@ -60,61 +59,70 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        body: Container(
-      padding: EdgeInsets.all(32.0),
-      child: Column(
-        children: <Widget>[
-          Text('メンバー'),
-          Row(
-            children: <Widget>[
-              Expanded(flex: 3, child: Text('東家: ')),
-              Expanded(
-                flex: 7,
-                child: Text(this.tonchaName),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(flex: 3, child: Text('南家: ')),
-              Expanded(
-                flex: 7,
-                child: Text(this.nanchaName),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(flex: 3, child: Text('西家: ')),
-              Expanded(
-                flex: 7,
-                child: Text(this.shachaName),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(flex: 3, child: Text('北家: ')),
-              Expanded(
-                flex: 7,
-                child: Text(this.pechaName),
-              ),
-            ],
-          ),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: new Text('戻る'),
-                )
-              ],
+        body: DefaultTextStyle.merge(
+            style: TextStyle(
+              fontSize: 20,
             ),
-          )
-        ],
-      ),
-    ));
+            child: Container(
+              padding: EdgeInsets.all(32.0),
+              child: Column(
+                children: <Widget>[
+                  Text('メンバー'),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(flex: 3, child: Text('東家: ')),
+                      Expanded(
+                        flex: 7,
+                        child: Text(this.tonchaName),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(flex: 3, child: Text('南家: ')),
+                      Expanded(
+                        flex: 7,
+                        child: Text(this.nanchaName),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(flex: 3, child: Text('西家: ')),
+                      Expanded(
+                        flex: 7,
+                        child: Text(this.shachaName),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(flex: 3, child: Text('北家: ')),
+                      Expanded(
+                        flex: 7,
+                        child: Text(this.pechaName),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        RaisedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: new Text('戻る'),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )));
   }
 }
 
