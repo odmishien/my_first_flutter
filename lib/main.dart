@@ -11,23 +11,110 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '麻雀点数計算',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('麻雀点数計算🀄️'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.sync),
-              onPressed: () {},
-            )
-          ],
-        ),
-        body: MemberForm(),
-      ),
+      home: MainPage(),
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => new MainPage(),
+        '/game': (BuildContext context) =>
+            new GamePage('hoge', 'hoge', 'hoge', 'hoge'),
+      },
     );
+  }
+}
+
+class MainPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text('麻雀点数計算🀄️'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.sync),
+            onPressed: () {},
+          )
+        ],
+      ),
+      body: MemberForm(),
+    );
+  }
+}
+
+class GamePage extends StatelessWidget {
+  String tonchaName = '';
+  String nanchaName = '';
+  String shachaName = '';
+  String pechaName = '';
+
+  GamePage(String tonchaName, String nanchaName, String shachaName,
+      String pechaName) {
+    this.tonchaName = tonchaName;
+    this.nanchaName = nanchaName;
+    this.shachaName = shachaName;
+    this.pechaName = pechaName;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        body: Container(
+      padding: EdgeInsets.all(32.0),
+      child: Column(
+        children: <Widget>[
+          Text('メンバー'),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('東家: ')),
+              Expanded(
+                flex: 7,
+                child: Text(this.tonchaName),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('南家: ')),
+              Expanded(
+                flex: 7,
+                child: Text(this.nanchaName),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('西家: ')),
+              Expanded(
+                flex: 7,
+                child: Text(this.shachaName),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('北家: ')),
+              Expanded(
+                flex: 7,
+                child: Text(this.pechaName),
+              ),
+            ],
+          ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                RaisedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: new Text('戻る'),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    ));
   }
 }
 
@@ -47,57 +134,76 @@ class _MemberFormState extends State<MemberForm> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(32.0),
-      child: Column(children: <Widget>[
-        Text('メンバー'),
-        Row(
-          children: <Widget>[
-            Expanded(flex: 3, child: Text('東家: ')),
-            Expanded(
-              flex: 7,
-              child: TextField(
-                controller: _tonController,
-                maxLength: 10,
+      child: Column(
+        children: <Widget>[
+          Text('メンバー'),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('東家: ')),
+              Expanded(
+                flex: 7,
+                child: TextField(
+                  controller: _tonController,
+                  maxLength: 10,
+                ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(flex: 3, child: Text('南家: ')),
-            Expanded(
-              flex: 7,
-              child: TextField(
-                controller: _nanController,
-                maxLength: 10,
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('南家: ')),
+              Expanded(
+                flex: 7,
+                child: TextField(
+                  controller: _nanController,
+                  maxLength: 10,
+                ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(flex: 3, child: Text('西家: ')),
-            Expanded(
-              flex: 7,
-              child: TextField(
-                controller: _shaController,
-                maxLength: 10,
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('西家: ')),
+              Expanded(
+                flex: 7,
+                child: TextField(
+                  controller: _shaController,
+                  maxLength: 10,
+                ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(flex: 3, child: Text('北家: ')),
-            Expanded(
-              flex: 7,
-              child: TextField(
-                controller: _peController,
-                maxLength: 10,
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(flex: 3, child: Text('北家: ')),
+              Expanded(
+                flex: 7,
+                child: TextField(
+                  controller: _peController,
+                  maxLength: 10,
+                ),
               ),
+            ],
+          ),
+          Center(
+            child: RaisedButton(
+              child: new Text('対局開始'),
+              onPressed: () => {
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute<Null>(
+                      settings: const RouteSettings(name: '/game'),
+                      builder: (BuildContext context) => GamePage(
+                          _tonController.text,
+                          _nanController.text,
+                          _shaController.text,
+                          _peController.text),
+                    ))
+              },
             ),
-          ],
-        )
-      ]),
+          )
+        ],
+      ),
     );
   }
 }
