@@ -36,6 +36,7 @@ class MainPage extends StatelessWidget {
             onPressed: () {},
           )
         ],
+        backgroundColor: Colors.green,
       ),
       body: MemberForm(),
     );
@@ -67,48 +68,107 @@ class GamePage extends StatelessWidget {
               padding: EdgeInsets.all(32.0),
               child: Column(
                 children: <Widget>[
-                  Text('メンバー'),
                   SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(flex: 3, child: Text('東家: ')),
-                      Expanded(
-                        flex: 7,
-                        child: Text(this.tonchaName),
+                  Table(
+                    border: TableBorder.all(),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: [
+                      TableRow(
+                        children: [
+                          Container(),
+                          Text(
+                            this.tonchaName,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            this.nanchaName,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            this.shachaName,
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            this.pechaName,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
+                      TableRow(children: [
+                        Text(
+                          '1',
+                          textAlign: TextAlign.center,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Text(
+                          '2',
+                          textAlign: TextAlign.center,
+                        ),
+                        TextField(
+                          keyboardType:
+                              TextInputType.numberWithOptions(signed: true),
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Text(
+                          '3',
+                          textAlign: TextAlign.center,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Text(
+                          '4',
+                          textAlign: TextAlign.center,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          keyboardType: TextInputType.number,
+                        ),
+                      ]),
                     ],
                   ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(flex: 3, child: Text('南家: ')),
-                      Expanded(
-                        flex: 7,
-                        child: Text(this.nanchaName),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(flex: 3, child: Text('西家: ')),
-                      Expanded(
-                        flex: 7,
-                        child: Text(this.shachaName),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: <Widget>[
-                      Expanded(flex: 3, child: Text('北家: ')),
-                      Expanded(
-                        flex: 7,
-                        child: Text(this.pechaName),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
                   Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
