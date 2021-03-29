@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       home: MainPage(),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => new MainPage(),
-        '/game': (BuildContext context) => new GamePage('', '', '', ''),
+        '/game': (BuildContext context) => new ScoreForm('', '', '', ''),
       },
     );
   }
@@ -43,19 +45,41 @@ class MainPage extends StatelessWidget {
   }
 }
 
-class GamePage extends StatelessWidget {
+class ScoreForm extends StatefulWidget {
   String tonchaName = '';
   String nanchaName = '';
   String shachaName = '';
   String pechaName = '';
-
-  GamePage(String tonchaName, String nanchaName, String shachaName,
+  ScoreForm(String tonchaName, String nanchaName, String shachaName,
       String pechaName) {
     this.tonchaName = tonchaName;
     this.nanchaName = nanchaName;
     this.shachaName = shachaName;
     this.pechaName = pechaName;
   }
+  @override
+  _ScoreFormState createState() => _ScoreFormState(
+      this.tonchaName, this.nanchaName, this.shachaName, this.pechaName);
+}
+
+class _ScoreFormState extends State<ScoreForm> {
+  String tonchaName = '';
+  String nanchaName = '';
+  String shachaName = '';
+  String pechaName = '';
+
+  _ScoreFormState(String tonchaName, String nanchaName, String shachaName,
+      String pechaName) {
+    this.tonchaName = tonchaName;
+    this.nanchaName = nanchaName;
+    this.shachaName = shachaName;
+    this.pechaName = pechaName;
+  }
+
+  List<int> player1Scores = [];
+  List<int> player2Scores = [];
+  List<int> player3Scores = [];
+  List<int> player4Scores = [];
 
   @override
   Widget build(BuildContext context) {
@@ -100,16 +124,39 @@ class GamePage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          onChanged: (text) {
+                            player1Scores.add(int.tryParse(text));
+                            debugPrint('run onChanged');
+                          },
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          onChanged: (text) {
+                            if (text.length > 0) {
+                              this.player2Scores[0] = int.parse(text);
+                            }
+                          },
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          onChanged: (text) {
+                            if (text.length > 0) {
+                              this.player3Scores[0] = int.parse(text);
+                            }
+                          },
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                          onChanged: (text) {
+                            if (text.length > 0) {
+                              this.player4Scores[0] = int.parse(text);
+                            }
+                          },
                         ),
                       ]),
                       TableRow(children: [
@@ -118,16 +165,19 @@ class GamePage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         TextField(
-                          keyboardType:
-                              TextInputType.numberWithOptions(signed: true),
-                        ),
-                        TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.number,
+                        ),
+                        TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                       ]),
@@ -137,15 +187,19 @@ class GamePage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                       ]),
@@ -155,16 +209,54 @@ class GamePage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
                         ),
                         TextField(
+                          textAlign: TextAlign.center,
                           keyboardType: TextInputType.number,
+                        ),
+                      ]),
+                      TableRow(children: [
+                        Text(
+                          '合計',
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          player1Scores
+                              .fold(
+                                  0, (previous, current) => previous + current)
+                              .toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          player2Scores
+                              .fold(
+                                  0, (previous, current) => previous + current)
+                              .toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          player3Scores
+                              .fold(
+                                  0, (previous, current) => previous + current)
+                              .toString(),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          player4Scores
+                              .fold(
+                                  0, (previous, current) => previous + current)
+                              .toString(),
+                          textAlign: TextAlign.center,
                         ),
                       ]),
                     ],
@@ -196,7 +288,6 @@ class _MemberFormState extends State<MemberForm> {
   final _nanController = TextEditingController();
   final _shaController = TextEditingController();
   final _peController = TextEditingController();
-  String _text = '';
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +352,7 @@ class _MemberFormState extends State<MemberForm> {
                     context,
                     new MaterialPageRoute<Null>(
                       settings: const RouteSettings(name: '/game'),
-                      builder: (BuildContext context) => GamePage(
+                      builder: (BuildContext context) => ScoreForm(
                           _tonController.text,
                           _nanController.text,
                           _shaController.text,
