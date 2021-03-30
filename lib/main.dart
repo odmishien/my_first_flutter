@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '麻雀点数計算',
+      title: '麻雀点数管理',
       home: MainPage(),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => new MainPage(),
@@ -27,7 +25,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('麻雀点数計算🀄️'),
+        title: Text('麻雀点数管理🀄️'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
