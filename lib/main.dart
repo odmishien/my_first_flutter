@@ -76,205 +76,167 @@ class _ScoreFormState extends State<ScoreForm> {
     this.pechaName = pechaName;
   }
 
-  List<int> player1Scores = [];
-  List<int> player2Scores = [];
-  List<int> player3Scores = [];
-  List<int> player4Scores = [];
+  List<int> player1Scores = [0, 0, 0, 0];
+  List<int> player2Scores = [0, 0, 0, 0];
+  List<int> player3Scores = [0, 0, 0, 0];
+  List<int> player4Scores = [0, 0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
+    final rows = <TableRow>[
+      TableRow(
+        children: [
+          Container(),
+          Text(
+            this.tonchaName,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            this.nanchaName,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            this.shachaName,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            this.pechaName,
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    ];
+    for (var i = 1; i < player1Scores.length; i++) {
+      rows.add(TableRow(
+        children: [
+          Text(
+            i.toString(),
+            textAlign: TextAlign.center,
+          ),
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.numberWithOptions(signed: true),
+            onChanged: (text) {
+              if (text.length > 0) {
+                setState(() {
+                  player1Scores[i] = int.parse(text);
+                });
+              }
+            },
+          ),
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.numberWithOptions(signed: true),
+            onChanged: (text) {
+              if (text.length > 0) {
+                setState(() {
+                  player2Scores[i] = int.parse(text);
+                });
+              }
+            },
+          ),
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.numberWithOptions(signed: true),
+            onChanged: (text) {
+              if (text.length > 0) {
+                setState(() {
+                  player3Scores[i] = int.parse(text);
+                });
+              }
+            },
+          ),
+          TextField(
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.numberWithOptions(signed: true),
+            onChanged: (text) {
+              if (text.length > 0) {
+                setState(() {
+                  player4Scores[i] = int.parse(text);
+                });
+              }
+            },
+          ),
+        ],
+      ));
+    }
+    rows.add(TableRow(children: [
+      Text(
+        '合計',
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        player1Scores
+            .fold(0, (previous, current) => previous + current)
+            .toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        player2Scores
+            .fold(0, (previous, current) => previous + current)
+            .toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        player3Scores
+            .fold(0, (previous, current) => previous + current)
+            .toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        player4Scores
+            .fold(0, (previous, current) => previous + current)
+            .toString(),
+        textAlign: TextAlign.center,
+      ),
+    ]));
+
     return new Scaffold(
         body: DefaultTextStyle.merge(
-            style: TextStyle(
-              fontSize: 20,
-            ),
-            child: Container(
-              padding: EdgeInsets.all(32.0),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20),
-                  Table(
-                    border: TableBorder.all(),
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: [
-                      TableRow(
-                        children: [
-                          Container(),
-                          Text(
-                            this.tonchaName,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            this.nanchaName,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            this.shachaName,
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            this.pechaName,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      TableRow(children: [
-                        Text(
-                          '1',
-                          textAlign: TextAlign.center,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          onChanged: (text) {
-                            player1Scores.add(int.tryParse(text));
-                            debugPrint('run onChanged');
-                          },
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          onChanged: (text) {
-                            if (text.length > 0) {
-                              this.player2Scores[0] = int.parse(text);
-                            }
-                          },
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          onChanged: (text) {
-                            if (text.length > 0) {
-                              this.player3Scores[0] = int.parse(text);
-                            }
-                          },
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          onChanged: (text) {
-                            if (text.length > 0) {
-                              this.player4Scores[0] = int.parse(text);
-                            }
-                          },
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Text(
-                          '2',
-                          textAlign: TextAlign.center,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Text(
-                          '3',
-                          textAlign: TextAlign.center,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Text(
-                          '4',
-                          textAlign: TextAlign.center,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                        TextField(
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ]),
-                      TableRow(children: [
-                        Text(
-                          '合計',
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          player1Scores
-                              .fold(
-                                  0, (previous, current) => previous + current)
-                              .toString(),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          player2Scores
-                              .fold(
-                                  0, (previous, current) => previous + current)
-                              .toString(),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          player3Scores
-                              .fold(
-                                  0, (previous, current) => previous + current)
-                              .toString(),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          player4Scores
-                              .fold(
-                                  0, (previous, current) => previous + current)
-                              .toString(),
-                          textAlign: TextAlign.center,
-                        ),
-                      ]),
+      style: TextStyle(
+        fontSize: 20,
+      ),
+      child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            padding: EdgeInsets.all(32.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Table(
+                  border: TableBorder.all(),
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: rows,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      RaisedButton(
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          onPressed: () => {
+                                setState(() {
+                                  player1Scores.add(0);
+                                  player2Scores.add(0);
+                                  player3Scores.add(0);
+                                  player4Scores.add(0);
+                                }),
+                              },
+                          child: new Text('新しい行を追加')),
+                      RaisedButton(
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: new Text('戻る'),
+                      )
                     ],
                   ),
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        RaisedButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: new Text('戻る'),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            )));
+                )
+              ],
+            ),
+          )),
+    ));
   }
 }
 
