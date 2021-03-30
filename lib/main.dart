@@ -45,6 +45,16 @@ class MainPage extends StatelessWidget {
   }
 }
 
+class InputScore {
+  int score;
+  bool isDirty;
+
+  InputScore(int score, bool isDirty) {
+    this.score = score;
+    this.isDirty = isDirty;
+  }
+}
+
 class ScoreForm extends StatefulWidget {
   String tonchaName = '';
   String nanchaName = '';
@@ -76,10 +86,18 @@ class _ScoreFormState extends State<ScoreForm> {
     this.pechaName = pechaName;
   }
 
-  List<int> player1Scores = [0, 0, 0, 0];
-  List<int> player2Scores = [0, 0, 0, 0];
-  List<int> player3Scores = [0, 0, 0, 0];
-  List<int> player4Scores = [0, 0, 0, 0];
+  List<InputScore> player1Scores = [
+    for (int i = 0; i < 3; i++) InputScore(0, false)
+  ];
+  List<InputScore> player2Scores = [
+    for (int i = 0; i < 3; i++) InputScore(0, false)
+  ];
+  List<InputScore> player3Scores = [
+    for (int i = 0; i < 3; i++) InputScore(0, false)
+  ];
+  List<InputScore> player4Scores = [
+    for (int i = 0; i < 3; i++) InputScore(0, false)
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -113,46 +131,54 @@ class _ScoreFormState extends State<ScoreForm> {
             i.toString(),
             textAlign: TextAlign.center,
           ),
-          TextField(
+          TextFormField(
             textAlign: TextAlign.center,
             keyboardType: TextInputType.numberWithOptions(signed: true),
             onChanged: (text) {
               if (text.length > 0) {
                 setState(() {
-                  player1Scores[i] = int.parse(text);
+                  player1Scores[i] = InputScore(int.parse(text), true);
+                  if (player2Scores[i].isDirty && player3Scores[i].isDirty) {
+                    player4Scores[i] = InputScore(
+                        0 -
+                            player1Scores[i].score -
+                            player2Scores[i].score -
+                            player3Scores[i].score,
+                        true);
+                  }
                 });
               }
             },
           ),
-          TextField(
+          TextFormField(
             textAlign: TextAlign.center,
             keyboardType: TextInputType.numberWithOptions(signed: true),
             onChanged: (text) {
               if (text.length > 0) {
                 setState(() {
-                  player2Scores[i] = int.parse(text);
+                  player2Scores[i] = InputScore(int.parse(text), true);
                 });
               }
             },
           ),
-          TextField(
+          TextFormField(
             textAlign: TextAlign.center,
             keyboardType: TextInputType.numberWithOptions(signed: true),
             onChanged: (text) {
               if (text.length > 0) {
                 setState(() {
-                  player3Scores[i] = int.parse(text);
+                  player3Scores[i] = InputScore(int.parse(text), true);
                 });
               }
             },
           ),
-          TextField(
+          TextFormField(
             textAlign: TextAlign.center,
             keyboardType: TextInputType.numberWithOptions(signed: true),
             onChanged: (text) {
               if (text.length > 0) {
                 setState(() {
-                  player4Scores[i] = int.parse(text);
+                  player4Scores[i] = InputScore(int.parse(text), true);
                 });
               }
             },
@@ -167,25 +193,25 @@ class _ScoreFormState extends State<ScoreForm> {
       ),
       Text(
         player1Scores
-            .fold(0, (previous, current) => previous + current)
+            .fold(0, (previous, current) => previous + current.score)
             .toString(),
         textAlign: TextAlign.center,
       ),
       Text(
         player2Scores
-            .fold(0, (previous, current) => previous + current)
+            .fold(0, (previous, current) => previous + current.score)
             .toString(),
         textAlign: TextAlign.center,
       ),
       Text(
         player3Scores
-            .fold(0, (previous, current) => previous + current)
+            .fold(0, (previous, current) => previous + current.score)
             .toString(),
         textAlign: TextAlign.center,
       ),
       Text(
         player4Scores
-            .fold(0, (previous, current) => previous + current)
+            .fold(0, (previous, current) => previous + current.score)
             .toString(),
         textAlign: TextAlign.center,
       ),
@@ -217,10 +243,10 @@ class _ScoreFormState extends State<ScoreForm> {
                           textColor: Colors.white,
                           onPressed: () => {
                                 setState(() {
-                                  player1Scores.add(0);
-                                  player2Scores.add(0);
-                                  player3Scores.add(0);
-                                  player4Scores.add(0);
+                                  player1Scores.add(InputScore(0, false));
+                                  player2Scores.add(InputScore(0, false));
+                                  player3Scores.add(InputScore(0, false));
+                                  player4Scores.add(InputScore(0, false));
                                 }),
                               },
                           child: new Text('新しい行を追加')),
