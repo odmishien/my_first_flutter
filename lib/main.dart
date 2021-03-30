@@ -99,8 +99,19 @@ class _ScoreFormState extends State<ScoreForm> {
     for (int i = 0; i < 3; i++) InputScore(0, false)
   ];
 
+  int rate = 10;
+  int badai = 0;
+
   @override
   Widget build(BuildContext context) {
+    var player1Sum =
+        player1Scores.fold(0, (previous, current) => previous + current.score);
+    var player2Sum =
+        player2Scores.fold(0, (previous, current) => previous + current.score);
+    var player3Sum =
+        player3Scores.fold(0, (previous, current) => previous + current.score);
+    var player4Sum =
+        player4Scores.fold(0, (previous, current) => previous + current.score);
     final rows = <TableRow>[
       TableRow(
         children: [
@@ -192,77 +203,140 @@ class _ScoreFormState extends State<ScoreForm> {
         textAlign: TextAlign.center,
       ),
       Text(
-        player1Scores
-            .fold(0, (previous, current) => previous + current.score)
-            .toString(),
+        player1Sum.toString(),
         textAlign: TextAlign.center,
       ),
       Text(
-        player2Scores
-            .fold(0, (previous, current) => previous + current.score)
-            .toString(),
+        player2Sum.toString(),
         textAlign: TextAlign.center,
       ),
       Text(
-        player3Scores
-            .fold(0, (previous, current) => previous + current.score)
-            .toString(),
+        player3Sum.toString(),
         textAlign: TextAlign.center,
       ),
       Text(
-        player4Scores
-            .fold(0, (previous, current) => previous + current.score)
-            .toString(),
+        player4Sum.toString(),
+        textAlign: TextAlign.center,
+      ),
+    ]));
+    rows.add(TableRow(children: [
+      Text(
+        '支払い',
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        ((player1Sum * rate) - (badai / 4)).toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        ((player2Sum * rate) - (badai / 4)).toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        ((player3Sum * rate) - (badai / 4)).toString(),
+        textAlign: TextAlign.center,
+      ),
+      Text(
+        ((player4Sum * rate) - (badai / 4)).toString(),
         textAlign: TextAlign.center,
       ),
     ]));
 
     return new Scaffold(
-        body: DefaultTextStyle.merge(
-      style: TextStyle(
-        fontSize: 20,
-      ),
-      child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            padding: EdgeInsets.all(32.0),
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 20),
-                Table(
-                  border: TableBorder.all(),
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: rows,
-                ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      RaisedButton(
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          onPressed: () => {
-                                setState(() {
-                                  player1Scores.add(InputScore(0, false));
-                                  player2Scores.add(InputScore(0, false));
-                                  player3Scores.add(InputScore(0, false));
-                                  player4Scores.add(InputScore(0, false));
-                                }),
-                              },
-                          child: new Text('新しい行を追加')),
-                      RaisedButton(
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: new Text('戻る'),
-                      )
-                    ],
-                  ),
-                )
-              ],
+        appBar: AppBar(
+          title: Text('麻雀点数計算🀄️'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {},
             ),
-          )),
-    ));
+            IconButton(
+              icon: Icon(Icons.sync),
+              onPressed: () {},
+            )
+          ],
+          backgroundColor: Colors.green,
+        ),
+        body: DefaultTextStyle.merge(
+          style: TextStyle(
+            fontSize: 20,
+          ),
+          child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Container(
+                padding: EdgeInsets.all(32.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 20),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Flexible(
+                            child: TextFormField(
+                              initialValue: '10',
+                              decoration: InputDecoration(
+                                  labelText: "レート", suffixText: "円/ポイント"),
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {
+                                  this.rate = int.parse(value);
+                                });
+                              },
+                            ),
+                          ),
+                          Flexible(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: "場代", suffixText: "円"),
+                              textAlign: TextAlign.center,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                setState(() {
+                                  this.badai = int.parse(value);
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Table(
+                      border: TableBorder.all(),
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children: rows,
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          RaisedButton(
+                              color: Colors.blue,
+                              textColor: Colors.white,
+                              onPressed: () => {
+                                    setState(() {
+                                      player1Scores.add(InputScore(0, false));
+                                      player2Scores.add(InputScore(0, false));
+                                      player3Scores.add(InputScore(0, false));
+                                      player4Scores.add(InputScore(0, false));
+                                    }),
+                                  },
+                              child: new Text('新しい行を追加')),
+                          RaisedButton(
+                            color: Colors.red,
+                            textColor: Colors.white,
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: new Text('戻る'),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        ));
   }
 }
 
